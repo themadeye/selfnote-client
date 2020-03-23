@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import NoteIcon from '@material-ui/icons/MenuBook';
 import MailIcon from '@material-ui/icons/Mail';
+import axios from 'axios';
 
 // Components
 import InteractionCard from './Cards/InteractionCard';
@@ -25,6 +26,9 @@ import InteractionCard from './Cards/InteractionCard';
 import NoteContext from '../context/Note/NoteContext';
 
 const drawerWidth = 240;
+const INSTRUCTOR = "v1";
+const COURSE_API_URL = "http://localhost:8080";
+const INSTRUCTOR_API_URL = `${COURSE_API_URL}/madeye/${INSTRUCTOR}`;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -107,12 +111,11 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
-  const handleNoteDisplay = () => {
-    // console.log('getNote');
-    // getNote();
-    // console.log('ntoe data',returnData);
-    // setNote(returnData);
-    // console.log('ntoe',note);
+  const handleNoteDisplay = async() => {
+    console.log('clicked');
+    let res = await axios.get(`${INSTRUCTOR_API_URL}/note`);
+    console.log('response', res);
+        
   };
 
   return (
