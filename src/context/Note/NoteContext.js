@@ -1,5 +1,12 @@
-import { createContext } from 'react';
+import React from 'react'
 
-const noteContext = createContext();
+const NoteContext = React.createContext({})
 
-export default noteContext;
+export const NoteProvider = NoteContext.Provider
+export default NoteContext
+
+// import { createContext } from 'react';
+
+// const noteContext = createContext();
+
+// export default noteContext;

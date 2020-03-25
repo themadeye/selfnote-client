@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState, Fragment} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -23,7 +23,8 @@ import axios from 'axios';
 import InteractionCard from './Cards/InteractionCard';
 
 // Context
-import NoteContext from '../context/Note/NoteContext';
+import { NoteProvider } from '../context/Note/NoteContext'
+
 
 const drawerWidth = 240;
 const INSTRUCTOR = "v1";
@@ -98,10 +99,8 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const noteContext = useContext(NoteContext);
-  console.log('context', noteContext);
-//   const {getNote, returnData} = noteContext;
-  const [note, setNote] = useState({});
+  const [note, setNote] = useState([]);
+  console.log(note);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -112,10 +111,9 @@ export default function MiniDrawer() {
   };
 
   const handleNoteDisplay = async() => {
-    console.log('clicked');
     let res = await axios.get(`${INSTRUCTOR_API_URL}/note`);
-    console.log('response', res);
-        
+    console.log('res', res);
+    setNote(res.data);
   };
 
   return (
@@ -182,9 +180,15 @@ export default function MiniDrawer() {
         </List>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <InteractionCard/>
-      </main>
+       <div className={classes.toolbar} />
+          {note.map((k,v) => (
+            <NoteProvider value={k}>
+              <InteractionCard/>
+            </NoteProvider> 
+          ))}
+          
+        </main>
+      
     </div>
   );
 }

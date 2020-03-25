@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -15,6 +15,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+// Context
+import NoteContext from '../../context/Note/NoteContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,8 +42,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
+  console.log('props', props);
   const classes = useStyles();
+  const data = useContext(NoteContext);
+  console.log('data', data);
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -49,6 +55,38 @@ export default function RecipeReviewCard() {
 
   return (
     <Card className={classes.root}>
+{/* 
+      {data && data.length? (
+        <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            {data[0].major}
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title={data[0].subcategory}
+        subheader={data[0].title}
+      />
+      ) : (
+        <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            R
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title="Shrimp and Chorizo Paella"
+        subheader="September 14, 2016"
+        />
+      )} */}
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -62,7 +100,8 @@ export default function RecipeReviewCard() {
         }
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
-      />
+        />
+      
       <CardMedia
         className={classes.media}
         image="/static/images/cards/paella.jpg"

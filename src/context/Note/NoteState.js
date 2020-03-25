@@ -36,7 +36,7 @@ const NoteState = props => {
         >
             {props.chilren}
         </NoteContext.Provider>    
-    )
+    );
 };
 
 export default NoteState;
