@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,6 +18,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import NoteIcon from '@material-ui/icons/MenuBook';
 import MailIcon from '@material-ui/icons/Mail';
 import axios from 'axios';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 // Components
 import InteractionCard from './Cards/InteractionCard';
@@ -34,6 +36,7 @@ const INSTRUCTOR_API_URL = `${COURSE_API_URL}/madeye/${INSTRUCTOR}`;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    flexGrow: 1,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -101,6 +104,12 @@ export default function MiniDrawer() {
   const [open, setOpen] = React.useState(false);
   const [note, setNote] = useState([]);
   console.log(note);
+
+  // useEffect(() => {
+  //   let res = axios.get(`${INSTRUCTOR_API_URL}/note`);
+  //   console.log('useEffect res', res);
+  //   setNote(res.data);
+  // }, [note])
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -181,13 +190,17 @@ export default function MiniDrawer() {
       </Drawer>
       <main className={classes.content}>
        <div className={classes.toolbar} />
-          {note.map((k,v) => (
-            <NoteProvider value={k}>
-              <InteractionCard/>
-            </NoteProvider> 
-          ))}
-          
-        </main>
+       <Grid container spacing={4}>
+            {note.map((k,v) => (
+              <Grid item xs={12} sm={3}>
+                <NoteProvider value={k}>
+                  <InteractionCard/>
+                </NoteProvider>   
+              </Grid>  
+            ))}
+       </Grid>
+      
+      </main>
       
     </div>
   );

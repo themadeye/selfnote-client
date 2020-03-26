@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, Fragment} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -42,8 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RecipeReviewCard(props) {
-  console.log('props', props);
+export default function RecipeReviewCard() {
   const classes = useStyles();
   const data = useContext(NoteContext);
   console.log('data', data);
@@ -55,64 +54,64 @@ export default function RecipeReviewCard(props) {
 
   return (
     <Card className={classes.root}>
-{/* 
-      {data && data.length? (
-        <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {data[0].major}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={data[0].subcategory}
-        subheader={data[0].title}
-      />
+      {data ? (
+        <Fragment>
+          <CardHeader avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              {data.major}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={data.subcategory}
+          subheader={data.title}
+          />
+          <CardMedia
+            className={classes.media}
+            image="/static/images/cards/paella.jpg"
+            title="Paella dish"
+          />
+
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {data.details}
+            </Typography>
+          </CardContent>
+        </Fragment>
+
       ) : (
-        <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-        />
-      )} */}
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-        />
-      
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
-      </CardContent>
+        <Fragment>
+          <CardHeader avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title="Shrimp and Chorizo Paella"
+            subheader="September 14, 2016"
+          />
+
+          <CardMedia
+            className={classes.media}
+            image="/static/images/cards/paella.jpg"
+            title="Paella dish"
+          />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              This impressive paella is a perfect party dish and a fun meal to cook together with your
+              guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            </Typography>
+          </CardContent>
+        </Fragment>
+      )}
+
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
