@@ -20,9 +20,12 @@ import MailIcon from '@material-ui/icons/Mail';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Popover from '@material-ui/core/Popover';
 
 // Components
 import InteractionCard from './Cards/InteractionCard';
+import FormSubmit from './Templates/FormSubmitTemplate';
 
 // Context
 import { NoteProvider } from '../context/Note/NoteContext'
@@ -37,6 +40,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexGrow: 1,
+    '& > *': {
+      margin: theme.spacing(1),
+    },
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -103,6 +109,7 @@ export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [note, setNote] = useState([]);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   console.log(note);
 
   // useEffect(() => {
@@ -110,6 +117,17 @@ export default function MiniDrawer() {
   //   console.log('useEffect res', res);
   //   setNote(res.data);
   // }, [note])
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const on = Boolean(anchorEl);
+  const id = on ? 'simple-popover' : undefined;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -199,7 +217,24 @@ export default function MiniDrawer() {
               </Grid>  
             ))}
        </Grid>
-      
+       <Button color="primary" onClick={handleClick}>Open Form</Button>
+       <Popover
+        id={id}
+        open={on}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        {/* Here to open add note form */}
+        <FormSubmit/>
+      </Popover>
       </main>
       
     </div>
