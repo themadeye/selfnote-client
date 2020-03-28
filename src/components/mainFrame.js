@@ -30,8 +30,8 @@ import FormSubmit from './Templates/FormSubmitTemplate';
 // Context
 import { NoteProvider } from '../context/Note/NoteContext'
 
-
 const drawerWidth = 240;
+
 const INSTRUCTOR = "v1";
 const COURSE_API_URL = "http://localhost:8080";
 const INSTRUCTOR_API_URL = `${COURSE_API_URL}/madeye/${INSTRUCTOR}`;

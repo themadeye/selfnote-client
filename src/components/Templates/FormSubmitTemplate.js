@@ -11,9 +11,10 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import NoteForm from '../Forms/NoteForm';
+import Axios from 'axios';
 // import PaymentForm from './PaymentForm';
 // import Review from './Review';
-var values = {major: '', subcategory: '', title:''}
+var values = {major: '', subcategory: '', title:'', details:''}
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -26,6 +27,10 @@ function Copyright() {
     </Typography>
   );
 }
+
+const INSTRUCTOR = "v1";
+const COURSE_API_URL = "http://localhost:8080";
+const INSTRUCTOR_API_URL = `${COURSE_API_URL}/madeye/${INSTRUCTOR}`;
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -96,6 +101,8 @@ export default function Checkout() {
   const handleNext = () => {
     // setActiveStep(activeStep + 1);
     console.log('change values', values);
+    console.log('major', values['major']);
+    return Axios.post(`${INSTRUCTOR_API_URL}/note/${values['major']}`, values)
   };
 
   const handleBack = () => {
