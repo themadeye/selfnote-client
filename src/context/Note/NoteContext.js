@@ -4,9 +4,3 @@ const NoteContext = React.createContext({})
 
 export const NoteProvider = NoteContext.Provider
 export default NoteContext
-
-// import { createContext } from 'react';
-
-// const noteContext = createContext();
-
-// export default noteContext;

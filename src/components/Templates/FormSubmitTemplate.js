@@ -12,6 +12,8 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import NoteForm from '../Forms/NoteForm';
 import Axios from 'axios';
+import NoteService from '../../services/NoteDataService';
+import ServiceRoute from '../../services/ServiceRoute';
 // import PaymentForm from './PaymentForm';
 // import Review from './Review';
 var values = {major: '', subcategory: '', title:'', details:''}
@@ -77,8 +79,6 @@ function GetStepContent(step) {
   function handleChange(newValue) {
     console.log('template onchange', newValue)
     values[Object.keys(newValue)] = Object.values(newValue)[0]
-    // values[newValue.key] = newValue;
-    // setValues({...values, ...newValue});
   }
 
   switch (step) {
@@ -98,15 +98,13 @@ export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
-    // setActiveStep(activeStep + 1);
+  const handleSubmit = () => {
     console.log('change values', values);
     console.log('major', values['major']);
-    return Axios.post(`${INSTRUCTOR_API_URL}/note/${values['major']}`, values)
+    ServiceRoute.route(1, "add",values)
   };
 
   const handleBack = () => {
-    // setActiveStep(activeStep - 1);
     console.log('change values', values);
   };
 
@@ -154,7 +152,7 @@ export default function Checkout() {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleNext}
+                    onClick={handleSubmit}
                     className={classes.button}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}

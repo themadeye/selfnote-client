@@ -1,4 +1,4 @@
-import React, {useState, Fragment, useEffect} from 'react';
+import React, {useState, Fragment, useEffect, useContext} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,13 +22,15 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
+import ServiceRoute from '../services/ServiceRoute';
 
 // Components
 import InteractionCard from './Cards/InteractionCard';
 import FormSubmit from './Templates/FormSubmitTemplate';
 
 // Context
-import { NoteProvider } from '../context/Note/NoteContext'
+import NoteContext from '../context/Note/NoteContext';
+import { NoteProvider } from '../context/Note/NoteContext';
 
 const drawerWidth = 240;
 
@@ -102,21 +104,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-console.log('rendered');
 export default function MiniDrawer() {
-  console.log('re-render');
   const classes = useStyles();
   const theme = useTheme();
+  // const data = useContext(NoteContext);
+  console.log('re-render');
   const [open, setOpen] = React.useState(false);
   const [note, setNote] = useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   console.log(note);
 
   // useEffect(() => {
-  //   let res = axios.get(`${INSTRUCTOR_API_URL}/note`);
-  //   console.log('useEffect res', res);
-  //   setNote(res.data);
-  // }, [note])
+  //   let rt = ServiceRoute.route(data.module,data.actionToken,data.data)
+  //   if(rt != null){
+  //     rt.then(
+  //       function(v) {
+  //         console.log('fullfill', v)
+  //         return v; 
+  //       }, 
+  //       function(e) {
+  //         console.log('error', e)
+  //         throw e; 
+  //       }
+  //     );
+  //   }
+  // }, [data])
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);

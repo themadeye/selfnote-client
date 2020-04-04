@@ -1,4 +1,4 @@
-import React, {useContext, Fragment} from 'react';
+import React, {useContext, Fragment, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -15,9 +15,13 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ServiceRoute from '../../services/ServiceRoute';
+import MainFrame from '../mainFrame';
 
 // Context
 import NoteContext from '../../context/Note/NoteContext';
+import { NoteProvider } from '../../context/Note/NoteContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,14 +47,40 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function RecipeReviewCard() {
+  console.log('re-render');
   const classes = useStyles();
   const data = useContext(NoteContext);
-  console.log('data', data);
   const [expanded, setExpanded] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
+  var rt;
+
+  useEffect(() => {
+    console.log('useEffect res', refresh);
+  }, [refresh])
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleDelete = () => {
+    // let k = {module: 1, actionToken: "delete", data: data}
+    // console.log('k value', k)
+    // return <NoteProvider value={k}><MainFrame/></NoteProvider>
+    let rt = ServiceRoute.route(1,"delete",data)
+    if(rt != null){
+      rt.then(
+        function(v) {
+          console.log('fullfill', v)
+          return v; 
+        }, 
+        function(e) {
+          console.log('error', e)
+          throw e; 
+        }
+      );
+    }
+    
+  }
 
   return (
     <Card className={classes.root}>
@@ -118,6 +148,9 @@ export default function RecipeReviewCard() {
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
+        </IconButton>
+        <IconButton>
+          <DeleteIcon onClick={handleDelete}/>
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
